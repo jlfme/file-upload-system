@@ -7,8 +7,10 @@
 
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_pymongo import PyMongo
 
 
+mongodb = PyMongo()
 db = SQLAlchemy()
 
 
@@ -20,7 +22,7 @@ class Picture(db.Model):
     filename = db.Column(db.String(100), nullable=False)
     etag = db.Column(db.String(100), nullable=False)
     path = db.Column(db.String(100), nullable=False)
-    url = db.Column(db.String(200), nullable=False)
+    # url = db.Column(db.String(200), nullable=False)
     content_type = db.Column(db.String(50), nullable=True)
     content_length = db.Column(db.BigInteger, nullable=True)
     upload_date = db.Column(db.DateTime, nullable=False)
