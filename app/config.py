@@ -17,7 +17,7 @@ class Config:
 
     # SQLALCHEMY_ECHO = True
     DEBUG = True
-    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:19880601@10.10.10.4:3306/flask_upload'
+    SQLALCHEMY_DATABASE_URI = 'mysql+mysqlconnector://root:password123@10.10.10.4:3306/flask_upload'
     SQLALCHEMY_TRACK_MODIFICATIONS = True
 
     # mongodb
