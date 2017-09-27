@@ -18,6 +18,7 @@ class Picture(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     filename = db.Column(db.String(100), nullable=False)
+    etag = db.Column(db.String(100), nullable=False)
     path = db.Column(db.String(100), nullable=False)
     url = db.Column(db.String(200), nullable=False)
     content_type = db.Column(db.String(50), nullable=True)
