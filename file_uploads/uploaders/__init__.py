@@ -6,10 +6,12 @@
 # ---------------------------------------
 
 
+import datetime
 import mimetypes
 
+from flask import safe_join, current_app
 from app.models import Picture, db as database
-from app.uploadhandlers.utils.hash import etag_stream
+from ..utils.hash import etag_stream
 
 
 class BaseFileUploader(object):
@@ -42,13 +44,9 @@ class BaseFileUploader(object):
     def _commit(self):
         self.db.session.commit()
 
-    @classmethod
-    def etags(cls, file_stream):
-        return etag_stream(file_stream)
-
-    @classmethod
-    def new_filename(cls, content_type, file_stream):
-        """ 返回由etag + 文件扩展名组成的新文件名
+    @staticmethod
+    def new_filename(content_type, file_stream):
+        """ 根据文件流和文件类型生成文件名
 
         Args:
             content_type: content_type
@@ -68,3 +66,21 @@ class BaseFileUploader(object):
         if file_stream.tell() > 0:
             file_stream.seek(0)
         return new_name
+
+    def save_file_info(self, filename, content_length, content_type):
+
+        if 'FILE_UPLOAD_DIR' not in current_app.config:
+            file_path = ''
+        else:
+            file_path = safe_join(current_app.config.get('FILE_UPLOAD_DIR'), filename)
+
+        picture = self.model(content_length=content_length,
+                             content_type=content_type,
+                             filename=filename,
+                             path=file_path,
+                             etag=filename,
+                             upload_date=datetime.datetime.now())
+        self.db.session.add(picture)
+        self.db.session.commit()
+
+        return picture
