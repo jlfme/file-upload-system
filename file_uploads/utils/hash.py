@@ -175,30 +175,3 @@ def entry(bucket, key):
         return urlsafe_base64_encode('{0}'.format(bucket))
     else:
         return urlsafe_base64_encode('{0}:{1}'.format(bucket, key))
-
-
-if __name__ == '__main__':
-
-    # with open ('./ok.txt', 'rb+') as f:
-    #     # with open('./temp.txt', 'wb+') as temp:
-    #     #     from shutil import copyfileobj
-    #     #     copyfileobj(f, temp)
-    #     #     print(temp.read()
-    #
-    #     for i in range(2**32):
-    #         f.write(b'0')
-
-    # from io import BytesIO
-    #
-    # b = BytesIO()
-    #
-    # for i in range(2**32):
-    #     b.write(b'0')
-
-    # print(b.getvalue())
-
-    from bitarray import bitarray
-
-    b = bitarray(2**10)
-
-    print(b)
