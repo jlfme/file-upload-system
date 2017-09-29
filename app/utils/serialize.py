@@ -24,13 +24,18 @@ def order_name(name):
 def serialize(instance):
     """serialize -- Serialize a Picture instance into a dict.
 
-    :param instance: Picture instance
+    Args:
+        instance: `class models.Picture` a object
+
+    Returns:
+        dict:
+
     """
     return {
-        'url': url_for('upload.picture_get', filename=instance.filename),
+        'url': url_for('main.picture_get', filename=instance.filename),
         'name': order_name(instance.filename),
         'type': mimetypes.guess_type(instance.filename)[0] or 'image/jpeg',
-        'thumbnailUrl': url_for('upload.picture_get', filename=instance.filename),
+        'thumbnailUrl': instance.url,
         'size': instance.content_length,
         'deleteUrl': url_for('upload.picture_delete', pk=instance.id),
         'deleteType': 'DELETE',
