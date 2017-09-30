@@ -25,12 +25,16 @@ def serialize(instance, error=None):
     """serialize -- Serialize a Picture instance into a dict.
 
     Args:
-        instance: `class models.Picture` a object
+        instance: The `~models.Picture` instance
+        error: error info
 
     Returns:
         dict:
 
     """
+
+    if error is not None:
+        return {'error': error}
 
     url = url_for('main.picture_get', filename=instance.filename)
     uploader_type = current_app.config.get('FILE_UPLOADER_TYPE')
@@ -46,6 +50,5 @@ def serialize(instance, error=None):
         'thumbnailUrl': url,
         'size': instance.content_length,
         'deleteUrl': url_for('main.picture_delete', pk=instance.id),
-        'deleteType': 'DELETE',
-        'error': None
+        'deleteType': 'DELETE'
     }
