@@ -8,7 +8,7 @@
 
 import mimetypes
 import re
-from flask import url_for
+from flask import url_for, current_app
 
 
 def order_name(name):
@@ -31,12 +31,20 @@ def serialize(instance):
         dict:
 
     """
+
+    url = url_for('main.picture_get', filename=instance.filename)
+    uploader_type = current_app.config.get('FILE_UPLOADER_TYPE')
+
+    if uploader_type == 'qiniu':
+        # url = current_app.config.get('')
+        url = "http://owoorc7te.bkt.clouddn.com/" + instance.filename
+
     return {
-        'url': url_for('main.picture_get', filename=instance.filename),
+        'url': url,
         'name': order_name(instance.filename),
         'type': mimetypes.guess_type(instance.filename)[0] or 'image/jpeg',
-        'thumbnailUrl': instance.url,
+        'thumbnailUrl': url,
         'size': instance.content_length,
-        'deleteUrl': url_for('upload.picture_delete', pk=instance.id),
+        'deleteUrl': url_for('main.picture_delete', pk=instance.id),
         'deleteType': 'DELETE',
     }
