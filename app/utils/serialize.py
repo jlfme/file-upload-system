@@ -21,7 +21,7 @@ def order_name(name):
     return name[:10] + "..." + name[-7:]
 
 
-def serialize(instance):
+def serialize(instance, error=None):
     """serialize -- Serialize a Picture instance into a dict.
 
     Args:
@@ -47,4 +47,5 @@ def serialize(instance):
         'size': instance.content_length,
         'deleteUrl': url_for('main.picture_delete', pk=instance.id),
         'deleteType': 'DELETE',
+        'error': None
     }
